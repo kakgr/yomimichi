@@ -27,7 +27,7 @@ test("漢字の読み練習画面をサーバー描画する", async () => {
   assert.match(html, /わからない/);
   assert.match(
     html,
-    new RegExp(`問題\\s*(?:<!-- -->)?1(?:<!-- -->)?\\s*\\/\\s*(?:<!-- -->)?${questions.length}`),
+    /問題\s*(?:<!-- -->)?1(?:<!-- -->)?\s*\/\s*(?:<!-- -->)?10/,
   );
   assert.match(html, /autocomplete="off"/i);
   assert.match(html, /spellcheck="false"/i);
@@ -83,4 +83,18 @@ test("答えるボタンへフォーカスが移っても縮小表示を維持�
   assert.match(css, /\.input-compact-shell/);
   assert.match(css, /\.input-compact\s*\{/);
   assert.doesNotMatch(css, /:has\(input:focus\)/);
+});
+
+test("入力時と正解時にそれぞれ音を鳴らす", async () => {
+  const page = await readFile(new URL("../app/page.tsx", import.meta.url), "utf8");
+
+  assert.match(page, /onChange={[\s\S]*playInputSound\(\)/);
+  assert.match(page, /advancingRef\.current = true;\s*playCorrectSound\(\)/);
+});
+
+test("1回の練習は全256問からランダムに選んだ10問にする", async () => {
+  const page = await readFile(new URL("../app/page.tsx", import.meta.url), "utf8");
+
+  assert.match(page, /SESSION_QUESTION_COUNT = 10/);
+  assert.match(page, /selectRandomQuestions\(questions, SESSION_QUESTION_COUNT\)/);
 });

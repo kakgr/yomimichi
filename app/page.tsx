@@ -2,12 +2,14 @@
 
 import { FormEvent, KeyboardEvent, useEffect, useRef, useState } from "react";
 import { questions } from "@/data/questions";
-import { isCorrectReading, shuffleQuestions } from "@/lib/quiz.mjs";
+import { isCorrectReading, selectRandomQuestions } from "@/lib/quiz.mjs";
+import { playCorrectSound, playInputSound } from "@/lib/sounds.mjs";
 
 type Feedback = "idle" | "correct" | "incorrect" | "revealed";
+const SESSION_QUESTION_COUNT = 10;
 
 export default function Home() {
-  const [questionOrder, setQuestionOrder] = useState(() => questions);
+  const [questionOrder, setQuestionOrder] = useState(() => questions.slice(0, SESSION_QUESTION_COUNT));
   const [questionIndex, setQuestionIndex] = useState(0);
   const [answer, setAnswer] = useState("");
   const [feedback, setFeedback] = useState<Feedback>("idle");
@@ -40,7 +42,7 @@ export default function Home() {
 
   useEffect(() => {
     const frame = window.requestAnimationFrame(() => {
-      setQuestionOrder(shuffleQuestions(questions));
+      setQuestionOrder(selectRandomQuestions(questions, SESSION_QUESTION_COUNT));
     });
     return () => window.cancelAnimationFrame(frame);
   }, []);
@@ -56,6 +58,7 @@ export default function Home() {
     }
 
     advancingRef.current = true;
+    playCorrectSound();
     setFeedback("correct");
     window.setTimeout(advanceQuestion, 950);
   }
@@ -83,7 +86,7 @@ export default function Home() {
   }
 
   function restart() {
-    setQuestionOrder(shuffleQuestions(questions));
+    setQuestionOrder(selectRandomQuestions(questions, SESSION_QUESTION_COUNT));
     setQuestionIndex(0);
     setAnswer("");
     setFeedback("idle");
@@ -141,6 +144,7 @@ export default function Home() {
                       id="reading"
                       value={answer}
                       onChange={(event) => {
+                        playInputSound();
                         setAnswer(event.target.value);
                         if (feedback === "incorrect") setFeedback("idle");
                       }}
