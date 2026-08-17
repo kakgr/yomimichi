@@ -186,7 +186,7 @@ button, input { font: inherit; }
 
 .input-row input[aria-invalid="true"] { border-color: var(--red); }
 
-.input-row button, .finish-panel button {
+.input-row button, .answer-reveal button, .finish-panel button {
   min-width: 124px;
   min-height: 56px;
   border: 0;
@@ -200,11 +200,45 @@ button, input { font: inherit; }
 }
 
 .input-row button span { margin-left: 12px; }
-.input-row button:hover:not(:disabled), .finish-panel button:hover { background: #254967; transform: translateY(-1px); }
-.input-row button:focus-visible, .finish-panel button:focus-visible { outline: 3px solid rgba(214, 84, 58, .4); outline-offset: 3px; }
+.input-row button:hover:not(:disabled), .answer-reveal button:hover, .finish-panel button:hover { background: #254967; transform: translateY(-1px); }
+.input-row button:focus-visible, .skip-button:focus-visible, .answer-reveal button:focus-visible, .finish-panel button:focus-visible { outline: 3px solid rgba(214, 84, 58, .4); outline-offset: 3px; }
 .input-row button:disabled { cursor: not-allowed; opacity: .35; }
 
 .input-hint { margin: 8px 0 0; color: var(--muted); font-size: 11px; }
+
+.answer-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.skip-button {
+  min-height: 44px;
+  border: 0;
+  color: var(--muted);
+  background: transparent;
+  cursor: pointer;
+  font-size: 13px;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+.skip-button:hover:not(:disabled) { color: var(--red-dark); }
+.skip-button:disabled { cursor: not-allowed; opacity: .35; }
+
+.answer-reveal {
+  display: grid;
+  min-height: 154px;
+  padding: 22px;
+  place-items: center;
+  border: 1px solid rgba(47, 120, 100, .28);
+  background: rgba(47, 120, 100, .06);
+  text-align: center;
+}
+
+.answer-label { margin: 0; color: var(--muted); font-size: 12px; font-weight: 700; letter-spacing: .1em; }
+.reading-answer { margin: 4px 0 16px; color: var(--green); font-size: 25px; font-weight: 700; letter-spacing: .08em; }
+.answer-reveal button { padding: 0 24px; }
 
 .feedback {
   display: flex;

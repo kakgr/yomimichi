@@ -4,19 +4,31 @@ import { FormEvent, KeyboardEvent, useEffect, useRef, useState } from "react";
 import { questions } from "@/data/questions";
 import { isCorrectReading } from "@/lib/quiz.mjs";
 
-type Feedback = "idle" | "correct" | "incorrect";
+type Feedback = "idle" | "correct" | "incorrect" | "revealed";
 
 export default function Home() {
   const [questionIndex, setQuestionIndex] = useState(0);
   const [answer, setAnswer] = useState("");
   const [feedback, setFeedback] = useState<Feedback>("idle");
   const [mistakes, setMistakes] = useState(0);
+  const [skipped, setSkipped] = useState(0);
   const [finished, setFinished] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
   const advancingRef = useRef(false);
   const composingRef = useRef(false);
 
   const question = questions[questionIndex];
+
+  function advanceQuestion() {
+    if (questionIndex === questions.length - 1) {
+      setFinished(true);
+    } else {
+      setQuestionIndex((current) => current + 1);
+    }
+    setAnswer("");
+    setFeedback("idle");
+    advancingRef.current = false;
+  }
 
   useEffect(() => {
     inputRef.current?.focus();
@@ -34,16 +46,14 @@ export default function Home() {
 
     advancingRef.current = true;
     setFeedback("correct");
-    window.setTimeout(() => {
-      if (questionIndex === questions.length - 1) {
-        setFinished(true);
-      } else {
-        setQuestionIndex((current) => current + 1);
-      }
-      setAnswer("");
-      setFeedback("idle");
-      advancingRef.current = false;
-    }, 550);
+    window.setTimeout(advanceQuestion, 550);
+  }
+
+  function revealAnswer() {
+    if (advancingRef.current) return;
+    setAnswer("");
+    setFeedback("revealed");
+    setSkipped((current) => current + 1);
   }
 
   function handleKeyDown(event: KeyboardEvent<HTMLInputElement>) {
@@ -57,6 +67,7 @@ export default function Home() {
     setAnswer("");
     setFeedback("idle");
     setMistakes(0);
+    setSkipped(0);
     setFinished(false);
   }
 
@@ -86,52 +97,69 @@ export default function Home() {
               <span className="brush-line" aria-hidden="true" />
             </div>
 
-            <form className="answer-form" onSubmit={submitAnswer} autoComplete="off">
-              <label htmlFor="reading">読みをひらがなで入力</label>
-              <div className="input-row">
-                <input
-                  ref={inputRef}
-                  id="reading"
-                  value={answer}
-                  onChange={(event) => {
-                    setAnswer(event.target.value);
-                    if (feedback === "incorrect") setFeedback("idle");
-                  }}
-                  onKeyDown={handleKeyDown}
-                  onCompositionStart={() => { composingRef.current = true; }}
-                  onCompositionEnd={() => {
-                    window.setTimeout(() => { composingRef.current = false; }, 0);
-                  }}
-                  type="text"
-                  inputMode="text"
-                  autoComplete="off"
-                  autoCorrect="off"
-                  autoCapitalize="off"
-                  spellCheck={false}
-                  enterKeyHint="done"
-                  aria-describedby="input-hint feedback"
-                  aria-invalid={feedback === "incorrect"}
-                />
-                <button type="submit" disabled={!answer.trim() || feedback === "correct"}>
-                  答える
-                  <span aria-hidden="true">→</span>
+            {feedback === "revealed" ? (
+              <div className="answer-reveal" role="status" aria-live="polite">
+                <p className="answer-label">答え：</p>
+                <p className="reading-answer">{question.readings.join(" ／ ")}</p>
+                <button type="button" onClick={advanceQuestion}>
+                  次の漢字へ <span aria-hidden="true">→</span>
                 </button>
               </div>
-              <p id="input-hint" className="input-hint">Enter キーでも答えられます</p>
-            </form>
+            ) : (
+              <>
+                <form className="answer-form" onSubmit={submitAnswer} autoComplete="off">
+                  <label htmlFor="reading">読みをひらがなで入力</label>
+                  <div className="input-row">
+                    <input
+                      ref={inputRef}
+                      id="reading"
+                      value={answer}
+                      onChange={(event) => {
+                        setAnswer(event.target.value);
+                        if (feedback === "incorrect") setFeedback("idle");
+                      }}
+                      onKeyDown={handleKeyDown}
+                      onCompositionStart={() => { composingRef.current = true; }}
+                      onCompositionEnd={() => {
+                        window.setTimeout(() => { composingRef.current = false; }, 0);
+                      }}
+                      type="text"
+                      inputMode="text"
+                      autoComplete="off"
+                      autoCorrect="off"
+                      autoCapitalize="off"
+                      spellCheck={false}
+                      enterKeyHint="done"
+                      aria-describedby="input-hint feedback"
+                      aria-invalid={feedback === "incorrect"}
+                    />
+                    <button type="submit" disabled={!answer.trim() || feedback === "correct"}>
+                      答える
+                      <span aria-hidden="true">→</span>
+                    </button>
+                  </div>
+                  <div className="answer-meta">
+                    <p id="input-hint" className="input-hint">Enter キーでも答えられます</p>
+                    <button className="skip-button" type="button" onClick={revealAnswer} disabled={feedback === "correct"}>
+                      わからない
+                    </button>
+                  </div>
+                </form>
 
-            <div id="feedback" className={`feedback ${feedback}`} role="status" aria-live="polite">
-              {feedback === "correct" && <><span aria-hidden="true">◯</span> 正解！ 次の漢字へ</>}
-              {feedback === "incorrect" && <><span aria-hidden="true">△</span> もう一度、読んでみよう</>}
-              {feedback === "idle" && <span aria-hidden="true">&nbsp;</span>}
-            </div>
+                <div id="feedback" className={`feedback ${feedback}`} role="status" aria-live="polite">
+                  {feedback === "correct" && <><span aria-hidden="true">◯</span> 正解！ 次の漢字へ</>}
+                  {feedback === "incorrect" && <><span aria-hidden="true">△</span> もう一度、読んでみよう</>}
+                  {feedback === "idle" && <span aria-hidden="true">&nbsp;</span>}
+                </div>
+              </>
+            )}
           </>
         ) : (
           <div className="finish-panel">
             <p className="finish-stamp" aria-hidden="true">完</p>
             <p className="eyebrow">きょうの練習</p>
             <h1>ぜんぶ読めました！</h1>
-            <p>{questions.length}問完了・まちがい {mistakes}回</p>
+            <p>{questions.length}問完了・まちがい {mistakes}回・スキップ {skipped}問</p>
             <button type="button" onClick={restart}>もう一度はじめる</button>
           </div>
         )}

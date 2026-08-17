@@ -24,6 +24,7 @@ test("漢字の読み練習画面をサーバー描画する", async () => {
   assert.match(html, /<title>漢字の読み練習 \| よみみち<\/title>/i);
   assert.match(html, /この漢字、なんて読む？/);
   assert.match(html, /読みをひらがなで入力/);
+  assert.match(html, /わからない/);
   assert.match(
     html,
     new RegExp(`問題\\s*(?:<!-- -->)?1(?:<!-- -->)?\\s*\\/\\s*(?:<!-- -->)?${questions.length}`),
@@ -48,4 +49,11 @@ test("問題データを専用ファイルで管理する", async () => {
   assert.match(source, /export const questions/);
   assert.match(source, /readings:\s*\[/);
   assert.match(source, /漢字を追加・変更/);
+});
+
+test("答えを確認して問題を飛ばせる", async () => {
+  const source = await readFile(new URL("../app/page.tsx", import.meta.url), "utf8");
+  assert.match(source, /feedback === "revealed"/);
+  assert.match(source, /答え：/);
+  assert.match(source, /次の漢字へ/);
 });
