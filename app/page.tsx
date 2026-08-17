@@ -2,11 +2,12 @@
 
 import { FormEvent, KeyboardEvent, useEffect, useRef, useState } from "react";
 import { questions } from "@/data/questions";
-import { isCorrectReading } from "@/lib/quiz.mjs";
+import { isCorrectReading, shuffleQuestions } from "@/lib/quiz.mjs";
 
 type Feedback = "idle" | "correct" | "incorrect" | "revealed";
 
 export default function Home() {
+  const [questionOrder, setQuestionOrder] = useState(() => questions);
   const [questionIndex, setQuestionIndex] = useState(0);
   const [answer, setAnswer] = useState("");
   const [feedback, setFeedback] = useState<Feedback>("idle");
@@ -17,10 +18,10 @@ export default function Home() {
   const advancingRef = useRef(false);
   const composingRef = useRef(false);
 
-  const question = questions[questionIndex];
+  const question = questionOrder[questionIndex];
 
   function advanceQuestion() {
-    if (questionIndex === questions.length - 1) {
+    if (questionIndex === questionOrder.length - 1) {
       setFinished(true);
     } else {
       setQuestionIndex((current) => current + 1);
@@ -33,6 +34,13 @@ export default function Home() {
   useEffect(() => {
     inputRef.current?.focus();
   }, [questionIndex, feedback]);
+
+  useEffect(() => {
+    const frame = window.requestAnimationFrame(() => {
+      setQuestionOrder(shuffleQuestions(questions));
+    });
+    return () => window.cancelAnimationFrame(frame);
+  }, []);
 
   function submitAnswer(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -63,6 +71,7 @@ export default function Home() {
   }
 
   function restart() {
+    setQuestionOrder(shuffleQuestions(questions));
     setQuestionIndex(0);
     setAnswer("");
     setFeedback("idle");
@@ -85,9 +94,9 @@ export default function Home() {
         {!finished ? (
           <>
             <div className="progress-row">
-              <p className="eyebrow">問題 {questionIndex + 1} / {questions.length}</p>
-              <div className="progress-track" aria-label={`${questions.length}問中${questionIndex + 1}問目`}>
-                <span style={{ width: `${((questionIndex + 1) / questions.length) * 100}%` }} />
+              <p className="eyebrow">問題 {questionIndex + 1} / {questionOrder.length}</p>
+              <div className="progress-track" aria-label={`${questionOrder.length}問中${questionIndex + 1}問目`}>
+                <span style={{ width: `${((questionIndex + 1) / questionOrder.length) * 100}%` }} />
               </div>
             </div>
 
@@ -159,7 +168,7 @@ export default function Home() {
             <p className="finish-stamp" aria-hidden="true">完</p>
             <p className="eyebrow">きょうの練習</p>
             <h1>ぜんぶ読めました！</h1>
-            <p>{questions.length}問完了・まちがい {mistakes}回・スキップ {skipped}問</p>
+            <p>{questionOrder.length}問完了・まちがい {mistakes}回・スキップ {skipped}問</p>
             <button type="button" onClick={restart}>もう一度はじめる</button>
           </div>
         )}
