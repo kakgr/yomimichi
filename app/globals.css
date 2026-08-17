@@ -1,0 +1,265 @@
+@import "tailwindcss";
+
+:root {
+  --ink: #18314a;
+  --paper: #f8f4e9;
+  --red: #d6543a;
+  --red-dark: #ad3d2a;
+  --green: #2f7864;
+  --muted: #6d756e;
+  --line: #d8d1bf;
+}
+
+* { box-sizing: border-box; }
+
+html { min-width: 320px; background: var(--paper); }
+
+body {
+  min-height: 100vh;
+  margin: 0;
+  color: var(--ink);
+  background:
+    radial-gradient(circle at 14% 8%, rgba(214, 84, 58, 0.08), transparent 28rem),
+    radial-gradient(circle at 90% 88%, rgba(47, 120, 100, 0.08), transparent 26rem),
+    var(--paper);
+  font-family: "Hiragino Kaku Gothic ProN", "Yu Gothic", Meiryo, sans-serif;
+}
+
+body::before {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  content: "";
+  opacity: 0.16;
+  background-image: repeating-linear-gradient(0deg, transparent, transparent 3px, rgba(24, 49, 74, 0.035) 4px);
+}
+
+button, input { font: inherit; }
+
+.page-shell {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  min-height: 100svh;
+  width: min(100% - 32px, 860px);
+  margin: 0 auto;
+  flex-direction: column;
+}
+
+.site-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 26px 4px 20px;
+  border-bottom: 1px solid var(--line);
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--ink);
+  font-family: "Yu Mincho", "Hiragino Mincho ProN", serif;
+  font-size: 21px;
+  font-weight: 700;
+  letter-spacing: .09em;
+  text-decoration: none;
+}
+
+.brand-mark {
+  display: grid;
+  width: 38px;
+  height: 38px;
+  place-items: center;
+  border-radius: 50% 47% 45% 49%;
+  color: #fff;
+  background: var(--red);
+  font-size: 18px;
+  letter-spacing: 0;
+  transform: rotate(-3deg);
+}
+
+.site-header > p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 13px;
+  letter-spacing: .12em;
+}
+
+.study-card {
+  width: min(100%, 680px);
+  min-height: 590px;
+  margin: clamp(28px, 6vh, 66px) auto 30px;
+  padding: clamp(26px, 5vw, 50px) clamp(22px, 7vw, 68px) 38px;
+  border: 1px solid rgba(24, 49, 74, .13);
+  border-radius: 4px;
+  background: rgba(255, 253, 247, .86);
+  box-shadow: 0 18px 60px rgba(42, 51, 45, .08), 6px 6px 0 rgba(214, 84, 58, .06);
+}
+
+.progress-row {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.eyebrow {
+  margin: 0;
+  color: var(--red-dark);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: .16em;
+  white-space: nowrap;
+}
+
+.progress-track {
+  width: 100%;
+  height: 3px;
+  overflow: hidden;
+  background: #e4dfd2;
+}
+
+.progress-track span {
+  display: block;
+  height: 100%;
+  background: var(--red);
+  transition: width .4s ease;
+}
+
+.prompt-block { margin-top: 42px; text-align: center; }
+
+.prompt-block > p:first-child {
+  margin: 0;
+  color: var(--muted);
+  font-size: 14px;
+  letter-spacing: .08em;
+}
+
+.kanji {
+  margin: 14px 0 4px;
+  font-family: "Yu Mincho", "Hiragino Mincho ProN", serif;
+  font-size: clamp(72px, 16vw, 112px);
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: .06em;
+}
+
+.brush-line {
+  display: block;
+  width: 84px;
+  height: 5px;
+  margin: 8px auto 35px;
+  border-radius: 70% 30% 60% 40%;
+  background: var(--red);
+  transform: rotate(-2deg);
+}
+
+.answer-form label {
+  display: block;
+  margin-bottom: 9px;
+  color: var(--ink);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: .04em;
+}
+
+.input-row { display: flex; gap: 10px; }
+
+.input-row input {
+  min-width: 0;
+  height: 56px;
+  flex: 1;
+  border: 1px solid #b8b3a7;
+  border-radius: 3px;
+  outline: 0;
+  background: #fff;
+  color: var(--ink);
+  padding: 0 18px;
+  font-size: 18px;
+  transition: border-color .15s, box-shadow .15s;
+}
+
+.input-row input:focus {
+  border-color: var(--ink);
+  box-shadow: 0 0 0 3px rgba(24, 49, 74, .12);
+}
+
+.input-row input[aria-invalid="true"] { border-color: var(--red); }
+
+.input-row button, .finish-panel button {
+  min-width: 124px;
+  min-height: 56px;
+  border: 0;
+  border-radius: 3px;
+  color: #fff;
+  background: var(--ink);
+  cursor: pointer;
+  font-weight: 700;
+  letter-spacing: .06em;
+  transition: transform .15s, background .15s;
+}
+
+.input-row button span { margin-left: 12px; }
+.input-row button:hover:not(:disabled), .finish-panel button:hover { background: #254967; transform: translateY(-1px); }
+.input-row button:focus-visible, .finish-panel button:focus-visible { outline: 3px solid rgba(214, 84, 58, .4); outline-offset: 3px; }
+.input-row button:disabled { cursor: not-allowed; opacity: .35; }
+
+.input-hint { margin: 8px 0 0; color: var(--muted); font-size: 11px; }
+
+.feedback {
+  display: flex;
+  min-height: 48px;
+  align-items: center;
+  justify-content: center;
+  margin-top: 18px;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: .04em;
+}
+.feedback span { margin-right: 8px; font-size: 22px; }
+.feedback.correct { color: var(--green); }
+.feedback.incorrect { color: var(--red-dark); }
+
+.finish-panel {
+  display: flex;
+  min-height: 500px;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  text-align: center;
+}
+.finish-stamp {
+  display: grid;
+  width: 92px;
+  height: 92px;
+  margin: 0 0 26px;
+  place-items: center;
+  border: 3px solid var(--red);
+  border-radius: 50%;
+  color: var(--red);
+  font: 700 47px/1 "Yu Mincho", serif;
+  transform: rotate(-5deg);
+}
+.finish-panel h1 { margin: 12px 0; font-family: "Yu Mincho", serif; font-size: clamp(30px, 7vw, 44px); }
+.finish-panel > p:not(.eyebrow):not(.finish-stamp) { margin: 0 0 34px; color: var(--muted); }
+.finish-panel button { padding: 0 30px; }
+
+footer { margin-top: auto; padding: 18px 4px 26px; color: var(--muted); text-align: center; font-size: 12px; }
+footer p { margin: 0; }
+footer span { margin-right: 8px; color: var(--green); font-size: 8px; }
+
+@media (max-width: 560px) {
+  .page-shell { width: min(100% - 20px, 860px); }
+  .site-header { padding-top: 16px; }
+  .site-header > p { display: none; }
+  .study-card { min-height: 540px; margin-top: 18px; padding-inline: 18px; }
+  .prompt-block { margin-top: 35px; }
+  .kanji { font-size: clamp(64px, 22vw, 88px); }
+  .brush-line { margin-bottom: 30px; }
+  .input-row { flex-direction: column; }
+  .input-row button { width: 100%; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { scroll-behavior: auto !important; transition: none !important; }
+}
