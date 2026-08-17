@@ -1,6 +1,7 @@
 import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
 import test from "node:test";
+import { questions } from "../data/questions.ts";
 
 async function render() {
   const workerUrl = new URL("../dist/server/index.js", import.meta.url);
@@ -23,10 +24,23 @@ test("漢字の読み練習画面をサーバー描画する", async () => {
   assert.match(html, /<title>漢字の読み練習 \| よみみち<\/title>/i);
   assert.match(html, /この漢字、なんて読む？/);
   assert.match(html, /読みをひらがなで入力/);
-  assert.match(html, /問題\s*(?:<!-- -->)?1(?:<!-- -->)?\s*\/\s*(?:<!-- -->)?8/);
+  assert.match(
+    html,
+    new RegExp(`問題\\s*(?:<!-- -->)?1(?:<!-- -->)?\\s*\\/\\s*(?:<!-- -->)?${questions.length}`),
+  );
   assert.match(html, /autocomplete="off"/i);
   assert.match(html, /spellcheck="false"/i);
   assert.doesNotMatch(html, /codex-preview|react-loading-skeleton/i);
+});
+
+test("ドリル第25回〜第30回の掲載語を収録する", () => {
+  assert.equal(questions.length, 256);
+  const entries = new Map(questions.map(({ kanji, readings }) => [kanji, readings]));
+  assert.deepEqual(entries.get("佳作"), ["かさく"]);
+  assert.deepEqual(entries.get("泌尿器"), ["ひにょうき"]);
+  assert.deepEqual(entries.get("擦過傷"), ["さっかしょう"]);
+  assert.deepEqual(entries.get("湖畔"), ["こはん"]);
+  assert.deepEqual(entries.get("地軸"), ["ちじく"]);
 });
 
 test("問題データを専用ファイルで管理する", async () => {
