@@ -68,5 +68,19 @@ test("正解表示とモバイル入力時の見やすさを強化する", async
   assert.match(page, /scrollIntoView/);
   assert.match(css, /\.prompt-block\.is-correct::after/);
   assert.match(css, /\.skip-button\s*\{[^}]*min-height:\s*54px/s);
-  assert.match(css, /:has\(input:focus\)/);
+  assert.match(css, /\.input-compact/);
+});
+
+test("答えるボタンへフォーカスが移っても縮小表示を維持する", async () => {
+  const [page, css] = await Promise.all([
+    readFile(new URL("../app/page.tsx", import.meta.url), "utf8"),
+    readFile(new URL("../app/globals.css", import.meta.url), "utf8"),
+  ]);
+
+  assert.match(page, /isCompactInput/);
+  assert.match(page, /input-compact-shell/);
+  assert.match(page, /input-compact/);
+  assert.match(css, /\.input-compact-shell/);
+  assert.match(css, /\.input-compact\s*\{/);
+  assert.doesNotMatch(css, /:has\(input:focus\)/);
 });

@@ -323,40 +323,40 @@ footer span { margin-right: 8px; color: var(--green); font-size: 8px; }
 }
 
 @media (max-width: 1024px) {
-  body:has(input:focus) .page-shell { width: min(100% - 12px, 680px); }
-  body:has(input:focus) .site-header,
-  body:has(input:focus) footer { display: none; }
-  body:has(input:focus) .study-card {
+  .input-compact-shell { width: min(100% - 12px, 680px); }
+  .input-compact-shell .site-header,
+  .input-compact-shell footer { display: none; }
+  .input-compact {
     min-height: auto;
     margin: 6px auto;
     padding: 14px 14px 12px;
     box-shadow: none;
   }
-  body:has(input:focus) .progress-row { gap: 10px; }
-  body:has(input:focus) .prompt-block { margin-top: 10px; }
-  body:has(input:focus) .prompt-block > p:first-child { font-size: 12px; }
-  body:has(input:focus) .kanji {
+  .input-compact .progress-row { gap: 10px; }
+  .input-compact .prompt-block { margin-top: 10px; }
+  .input-compact .prompt-block > p:first-child { font-size: 12px; }
+  .input-compact .kanji {
     margin: 4px 0 0;
     font-size: clamp(48px, 13vw, 68px);
     line-height: 1.08;
   }
-  body:has(input:focus) .brush-line {
+  .input-compact .brush-line {
     height: 4px;
     margin: 2px auto 12px;
   }
-  body:has(input:focus) .answer-form label { margin-bottom: 5px; }
-  body:has(input:focus) .input-row { flex-direction: row; gap: 8px; }
-  body:has(input:focus) .input-row input { height: 52px; }
-  body:has(input:focus) .input-row button {
+  .input-compact .answer-form label { margin-bottom: 5px; }
+  .input-compact .input-row { flex-direction: row; gap: 8px; }
+  .input-compact .input-row input { height: 52px; }
+  .input-compact .input-row button {
     width: auto;
     min-width: 92px;
     min-height: 52px;
   }
-  body:has(input:focus) .input-row button span { margin-left: 5px; }
-  body:has(input:focus) .answer-meta { align-items: center; flex-direction: row; margin-top: 4px; }
-  body:has(input:focus) .input-hint { display: none; }
-  body:has(input:focus) .skip-button { width: 100%; min-height: 54px; }
-  body:has(input:focus) .feedback { min-height: 36px; margin-top: 4px; }
+  .input-compact .input-row button span { margin-left: 5px; }
+  .input-compact .answer-meta { align-items: center; flex-direction: row; margin-top: 4px; }
+  .input-compact .input-hint { display: none; }
+  .input-compact .skip-button { width: 100%; min-height: 54px; }
+  .input-compact .feedback { min-height: 36px; margin-top: 4px; }
 }
 
 @media (prefers-reduced-motion: reduce) {

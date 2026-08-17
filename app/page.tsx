@@ -14,6 +14,7 @@ export default function Home() {
   const [mistakes, setMistakes] = useState(0);
   const [skipped, setSkipped] = useState(0);
   const [finished, setFinished] = useState(false);
+  const [isCompactInput, setIsCompactInput] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
   const studyCardRef = useRef<HTMLElement>(null);
   const advancingRef = useRef(false);
@@ -24,6 +25,7 @@ export default function Home() {
   function advanceQuestion() {
     if (questionIndex === questionOrder.length - 1) {
       setFinished(true);
+      setIsCompactInput(false);
     } else {
       setQuestionIndex((current) => current + 1);
     }
@@ -63,6 +65,7 @@ export default function Home() {
     setAnswer("");
     setFeedback("revealed");
     setSkipped((current) => current + 1);
+    setIsCompactInput(false);
   }
 
   function handleKeyDown(event: KeyboardEvent<HTMLInputElement>) {
@@ -73,6 +76,7 @@ export default function Home() {
 
   function keepQuestionVisible() {
     if (!window.matchMedia("(max-width: 1024px)").matches) return;
+    setIsCompactInput(true);
     window.setTimeout(() => {
       studyCardRef.current?.scrollIntoView({ block: "start", behavior: "smooth" });
     }, 300);
@@ -86,10 +90,11 @@ export default function Home() {
     setMistakes(0);
     setSkipped(0);
     setFinished(false);
+    setIsCompactInput(false);
   }
 
   return (
-    <main className="page-shell">
+    <main className={`page-shell${isCompactInput ? " input-compact-shell" : ""}`}>
       <header className="site-header">
         <div className="brand" aria-label="よみみち">
           <span className="brand-mark" aria-hidden="true">読</span>
@@ -98,7 +103,11 @@ export default function Home() {
         <p>毎日、ひと読み。</p>
       </header>
 
-      <section ref={studyCardRef} className="study-card" aria-labelledby="practice-title">
+      <section
+        ref={studyCardRef}
+        className={`study-card${isCompactInput ? " input-compact" : ""}`}
+        aria-labelledby="practice-title"
+      >
         {!finished ? (
           <>
             <div className="progress-row">
