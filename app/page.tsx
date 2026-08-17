@@ -15,6 +15,7 @@ export default function Home() {
   const [skipped, setSkipped] = useState(0);
   const [finished, setFinished] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
+  const studyCardRef = useRef<HTMLElement>(null);
   const advancingRef = useRef(false);
   const composingRef = useRef(false);
 
@@ -54,7 +55,7 @@ export default function Home() {
 
     advancingRef.current = true;
     setFeedback("correct");
-    window.setTimeout(advanceQuestion, 550);
+    window.setTimeout(advanceQuestion, 950);
   }
 
   function revealAnswer() {
@@ -68,6 +69,13 @@ export default function Home() {
     if (event.key === "Enter" && (event.nativeEvent.isComposing || event.keyCode === 229)) {
       composingRef.current = true;
     }
+  }
+
+  function keepQuestionVisible() {
+    if (!window.matchMedia("(max-width: 1024px)").matches) return;
+    window.setTimeout(() => {
+      studyCardRef.current?.scrollIntoView({ block: "start", behavior: "smooth" });
+    }, 300);
   }
 
   function restart() {
@@ -90,7 +98,7 @@ export default function Home() {
         <p>毎日、ひと読み。</p>
       </header>
 
-      <section className="study-card" aria-labelledby="practice-title">
+      <section ref={studyCardRef} className="study-card" aria-labelledby="practice-title">
         {!finished ? (
           <>
             <div className="progress-row">
@@ -100,7 +108,7 @@ export default function Home() {
               </div>
             </div>
 
-            <div className="prompt-block">
+            <div className={`prompt-block${feedback === "correct" ? " is-correct" : ""}`}>
               <p id="practice-title">この漢字、なんて読む？</p>
               <p className="kanji" lang="ja">{question.kanji}</p>
               <span className="brush-line" aria-hidden="true" />
@@ -128,6 +136,7 @@ export default function Home() {
                         if (feedback === "incorrect") setFeedback("idle");
                       }}
                       onKeyDown={handleKeyDown}
+                      onFocus={keepQuestionVisible}
                       onCompositionStart={() => { composingRef.current = true; }}
                       onCompositionEnd={() => {
                         window.setTimeout(() => { composingRef.current = false; }, 0);

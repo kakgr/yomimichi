@@ -57,3 +57,16 @@ test("答えを確認して問題を飛ばせる", async () => {
   assert.match(source, /答え：/);
   assert.match(source, /次の漢字へ/);
 });
+
+test("正解表示とモバイル入力時の見やすさを強化する", async () => {
+  const [page, css] = await Promise.all([
+    readFile(new URL("../app/page.tsx", import.meta.url), "utf8"),
+    readFile(new URL("../app/globals.css", import.meta.url), "utf8"),
+  ]);
+
+  assert.match(page, /is-correct/);
+  assert.match(page, /scrollIntoView/);
+  assert.match(css, /\.prompt-block\.is-correct::after/);
+  assert.match(css, /\.skip-button\s*\{[^}]*min-height:\s*54px/s);
+  assert.match(css, /:has\(input:focus\)/);
+});
