@@ -97,6 +97,70 @@ button, input { font: inherit; }
   box-shadow: 0 18px 60px rgba(42, 51, 45, .08), 6px 6px 0 rgba(214, 84, 58, .06);
 }
 
+.learning-menu {
+  width: min(100%, 760px);
+  min-height: 500px;
+  margin: clamp(28px, 6vh, 66px) auto 30px;
+  padding: clamp(34px, 6vw, 58px);
+  border: 1px solid rgba(24, 49, 74, .13);
+  border-radius: 4px;
+  background: rgba(255, 253, 247, .86);
+  box-shadow: 0 18px 60px rgba(42, 51, 45, .08), 6px 6px 0 rgba(214, 84, 58, .06);
+}
+
+.menu-intro { max-width: 520px; }
+.menu-intro h1 {
+  margin: 14px 0 10px;
+  font-family: "Yu Mincho", "Hiragino Mincho ProN", serif;
+  font-size: clamp(30px, 6vw, 45px);
+  line-height: 1.35;
+  letter-spacing: .04em;
+}
+.menu-intro > p:last-child { margin: 0; color: var(--muted); font-size: 14px; }
+
+.learning-grid { display: grid; margin-top: 44px; gap: 16px; }
+
+.learning-option {
+  display: grid;
+  width: 100%;
+  min-height: 150px;
+  padding: 24px 26px;
+  align-items: center;
+  grid-template-columns: auto 1fr auto;
+  gap: 22px;
+  border: 1px solid rgba(24, 49, 74, .2);
+  border-radius: 4px;
+  color: var(--ink);
+  background: #fffdf8;
+  cursor: pointer;
+  text-align: left;
+  transition: border-color .15s, box-shadow .15s, transform .15s;
+}
+.learning-option:hover {
+  border-color: var(--red-dark);
+  box-shadow: 0 10px 30px rgba(42, 51, 45, .08);
+  transform: translateY(-2px);
+}
+.learning-option:focus-visible { outline: 3px solid rgba(214, 84, 58, .4); outline-offset: 3px; }
+.learning-mark {
+  display: grid;
+  width: 70px;
+  height: 70px;
+  place-items: center;
+  border-radius: 50% 47% 45% 49%;
+  color: #fff;
+  background: var(--red);
+  font: 700 32px/1 "Yu Mincho", serif;
+  transform: rotate(-3deg);
+}
+.image-learning-mark { background: var(--green); transform: rotate(3deg); }
+.second-learning-mark { background: #89723d; transform: rotate(2deg); }
+.learning-copy { display: grid; gap: 7px; }
+.learning-copy strong { font-family: "Yu Mincho", serif; font-size: 25px; letter-spacing: .06em; }
+.learning-copy > span { color: var(--muted); font-size: 13px; line-height: 1.7; }
+.learning-copy small { color: var(--green); font-size: 12px; font-weight: 700; letter-spacing: .04em; }
+.learning-arrow { color: var(--red-dark); font-size: 28px; }
+
 .progress-row {
   display: flex;
   align-items: center;
@@ -173,6 +237,71 @@ button, input { font: inherit; }
   border-radius: 70% 30% 60% 40%;
   background: var(--red);
   transform: rotate(-2deg);
+}
+
+.image-study-card { min-height: 660px; }
+.image-prompt { position: relative; margin-top: 24px; text-align: center; }
+.image-prompt > p:first-child {
+  margin: 0 0 12px;
+  color: var(--muted);
+  font-size: 14px;
+  letter-spacing: .08em;
+}
+.question-images {
+  display: flex;
+  height: auto;
+  overflow-x: auto;
+  border: 1px solid rgba(24, 49, 74, .13);
+  border-radius: 4px;
+  background: #f0eee7;
+  scroll-behavior: smooth;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: thin;
+}
+.question-image-frame {
+  position: relative;
+  display: grid;
+  min-width: 100%;
+  height: auto;
+  margin: 0;
+  padding: 8px;
+  place-items: center;
+  scroll-snap-align: center;
+}
+.question-image-frame img {
+  display: block;
+  width: auto;
+  max-width: 100%;
+  height: auto;
+  object-fit: contain;
+  user-select: none;
+}
+.question-image-frame figcaption {
+  position: absolute;
+  right: 12px;
+  bottom: 10px;
+  padding: 4px 8px;
+  border-radius: 99px;
+  color: #fff;
+  background: rgba(24, 49, 74, .78);
+  font-size: 11px;
+  font-weight: 700;
+}
+.swipe-hint { margin: 7px 0 13px; color: var(--muted); font-size: 11px; }
+.image-prompt:not(:has(.swipe-hint)) { margin-bottom: 20px; }
+.image-prompt.is-correct::after {
+  position: absolute;
+  z-index: 2;
+  top: 54%;
+  left: 50%;
+  width: min(80%, 390px);
+  height: min(72%, 270px);
+  border: 8px solid rgba(214, 84, 58, .92);
+  border-radius: 50%;
+  pointer-events: none;
+  content: "";
+  transform: translate(-50%, -50%) rotate(-5deg);
+  animation: correct-circle .3s cubic-bezier(.2, .9, .25, 1.2) both;
 }
 
 .answer-form label {
@@ -303,6 +432,13 @@ button, input { font: inherit; }
 .finish-panel h1 { margin: 12px 0; font-family: "Yu Mincho", serif; font-size: clamp(30px, 7vw, 44px); }
 .finish-panel > p:not(.eyebrow):not(.finish-stamp) { margin: 0 0 34px; color: var(--muted); }
 .finish-panel button { padding: 0 30px; }
+.finish-actions { display: flex; justify-content: center; gap: 10px; }
+.finish-panel .secondary-button {
+  border: 1px solid #aaa89f;
+  color: var(--ink);
+  background: #fffdf8;
+}
+.finish-panel .secondary-button:hover { color: var(--red-dark); background: #fff8f3; }
 
 footer { margin-top: auto; padding: 18px 4px 26px; color: var(--muted); text-align: center; font-size: 12px; }
 footer p { margin: 0; }
@@ -313,13 +449,22 @@ footer span { margin-right: 8px; color: var(--green); font-size: 8px; }
   .site-header { padding-top: 16px; }
   .site-header > p { display: none; }
   .study-card { min-height: 540px; margin-top: 18px; padding-inline: 18px; }
+  .learning-menu { min-height: 480px; margin-top: 18px; padding: 34px 20px; }
+  .learning-grid { margin-top: 32px; }
+  .learning-option { min-height: 170px; padding: 22px 18px; grid-template-columns: auto 1fr; gap: 16px; }
+  .learning-mark { width: 58px; height: 58px; font-size: 27px; }
+  .learning-copy strong { font-size: 22px; }
+  .learning-arrow { display: none; }
   .prompt-block { margin-top: 35px; }
   .kanji { font-size: clamp(64px, 22vw, 88px); }
   .brush-line { margin-bottom: 30px; }
+  .image-study-card { min-height: 630px; }
   .input-row { flex-direction: column; }
   .input-row button { width: 100%; }
   .answer-meta { align-items: stretch; flex-direction: column; gap: 4px; }
   .skip-button { width: 100%; }
+  .finish-actions { width: 100%; flex-direction: column; }
+  .finish-actions button { width: 100%; }
 }
 
 @media (max-width: 1024px) {
@@ -344,6 +489,11 @@ footer span { margin-right: 8px; color: var(--green); font-size: 8px; }
     height: 4px;
     margin: 2px auto 12px;
   }
+  .input-compact .image-prompt { margin-top: 7px; }
+  .input-compact .image-prompt > p:first-child { margin-bottom: 5px; font-size: 12px; }
+  .input-compact .question-image-frame { padding: 5px; }
+  .input-compact .swipe-hint { margin: 3px 0 5px; }
+  .input-compact .image-prompt:not(:has(.swipe-hint)) { margin-bottom: 7px; }
   .input-compact .answer-form label { margin-bottom: 5px; }
   .input-compact .input-row { flex-direction: row; gap: 8px; }
   .input-compact .input-row input { height: 52px; }

@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "漢字の読み練習 | よみみち",
-  description: "出題された漢字の読みを答えて、楽しく身につける練習サイトです。",
+  title: "学習ドリル | よみみち",
+  description: "漢字の読みや植物・道具の名前を、10問ずつ楽しく練習できるサイトです。",
   icons: { icon: "/favicon.svg" },
 };
 

@@ -1,0 +1,286 @@
+export type FfjQuestion = Readonly<{
+  id: number;
+  name: string;
+  answers: readonly string[];
+  images: readonly string[];
+}>;
+
+// H8後期FFJ検定.xlsxから、名称と画像がそろった項目を収録しています。
+export const ffjQuestions = [
+  {
+    id: 1,
+    name: "ピラカンサ",
+    answers: ["ピラカンサ"],
+    images: ["./questions/ffj/01-1.webp"],
+  },
+  {
+    id: 2,
+    name: "ウメ",
+    answers: ["ウメ"],
+    images: ["./questions/ffj/02-1.webp"],
+  },
+  {
+    id: 3,
+    name: "アセビ",
+    answers: ["アセビ"],
+    images: ["./questions/ffj/03-1.webp"],
+  },
+  {
+    id: 4,
+    name: "ヒノキ",
+    answers: ["ヒノキ"],
+    images: ["./questions/ffj/04-1.webp"],
+  },
+  {
+    id: 5,
+    name: "ゲッケイジュ",
+    answers: ["ゲッケイジュ"],
+    images: ["./questions/ffj/05-1.webp"],
+  },
+  {
+    id: 6,
+    name: "シャリンバイ",
+    answers: ["シャリンバイ"],
+    images: ["./questions/ffj/06-1.webp"],
+  },
+  {
+    id: 7,
+    name: "クロガネモチ",
+    answers: ["クロガネモチ"],
+    images: ["./questions/ffj/07-1.webp"],
+  },
+  {
+    id: 8,
+    name: "トウカエデ",
+    answers: ["トウカエデ"],
+    images: ["./questions/ffj/08-1.webp"],
+  },
+  {
+    id: 9,
+    name: "アオキ",
+    answers: ["アオキ"],
+    images: ["./questions/ffj/09-1.webp"],
+  },
+  {
+    id: 10,
+    name: "エノキ",
+    answers: ["エノキ"],
+    images: ["./questions/ffj/10-1.webp"],
+  },
+  {
+    id: 11,
+    name: "トベラ",
+    answers: ["トベラ"],
+    images: ["./questions/ffj/11-1.webp"],
+  },
+  {
+    id: 12,
+    name: "ヒサカキ",
+    answers: ["ヒサカキ"],
+    images: ["./questions/ffj/12-1.webp"],
+  },
+  {
+    id: 13,
+    name: "ウバメガシ",
+    answers: ["ウバメガシ"],
+    images: ["./questions/ffj/13-1.webp"],
+  },
+  {
+    id: 14,
+    name: "ドウダンツツジ",
+    answers: ["ドウダンツツジ"],
+    images: ["./questions/ffj/14-1.webp"],
+  },
+  {
+    id: 15,
+    name: "アジサイ",
+    answers: ["アジサイ"],
+    images: ["./questions/ffj/15-1.webp"],
+  },
+  {
+    id: 16,
+    name: "ハナミズキ",
+    answers: ["ハナミズキ"],
+    images: ["./questions/ffj/16-1.webp"],
+  },
+  {
+    id: 17,
+    name: "サルスベリ",
+    answers: ["サルスベリ"],
+    images: ["./questions/ffj/17-1.webp"],
+  },
+  {
+    id: 18,
+    name: "ロウバイ",
+    answers: ["ロウバイ"],
+    images: ["./questions/ffj/18-1.webp"],
+  },
+  {
+    id: 19,
+    name: "アカマツ",
+    answers: ["アカマツ"],
+    images: ["./questions/ffj/19-1.webp"],
+  },
+  {
+    id: 20,
+    name: "ナンテン",
+    answers: ["ナンテン"],
+    images: ["./questions/ffj/20-1.webp"],
+  },
+  {
+    id: 21,
+    name: "サツキツツジ",
+    answers: ["サツキツツジ"],
+    images: ["./questions/ffj/21-1.webp"],
+  },
+  {
+    id: 22,
+    name: "ヤブツバキ",
+    answers: ["ヤブツバキ"],
+    images: ["./questions/ffj/22-1.webp"],
+  },
+  {
+    id: 23,
+    name: "メタセコイア",
+    answers: ["メタセコイア"],
+    images: ["./questions/ffj/23-1.webp"],
+  },
+  {
+    id: 24,
+    name: "ヒイラギ",
+    answers: ["ヒイラギ"],
+    images: ["./questions/ffj/24-1.webp"],
+  },
+  {
+    id: 25,
+    name: "サザンカ",
+    answers: ["サザンカ"],
+    images: ["./questions/ffj/25-1.webp"],
+  },
+  {
+    id: 26,
+    name: "モッコク",
+    answers: ["モッコク"],
+    images: ["./questions/ffj/26-1.webp"],
+  },
+  {
+    id: 27,
+    name: "スギ",
+    answers: ["スギ"],
+    images: ["./questions/ffj/27-1.webp"],
+  },
+  {
+    id: 28,
+    name: "キンモクセイ",
+    answers: ["キンモクセイ"],
+    images: ["./questions/ffj/28-1.webp"],
+  },
+  {
+    id: 29,
+    name: "カイツカイブキ",
+    answers: ["カイツカイブキ"],
+    images: ["./questions/ffj/29-1.webp"],
+  },
+  {
+    id: 30,
+    name: "イヌツゲ",
+    answers: ["イヌツゲ"],
+    images: ["./questions/ffj/30-1.webp"],
+  },
+  {
+    id: 31,
+    name: "小舗石",
+    answers: ["小舗石", "しょうほせき"],
+    images: ["./questions/ffj/31-1.webp"],
+  },
+  {
+    id: 32,
+    name: "剪定ばさみ",
+    answers: ["剪定ばさみ", "せんていばさみ"],
+    images: ["./questions/ffj/32-1.webp"],
+  },
+  {
+    id: 33,
+    name: "アリダート",
+    answers: ["アリダート"],
+    images: ["./questions/ffj/33-1.webp"],
+  },
+  {
+    id: 35,
+    name: "竹引きノコギリ",
+    answers: ["竹引きノコギリ", "たけひきのこぎり"],
+    images: ["./questions/ffj/35-1.webp"],
+  },
+  {
+    id: 36,
+    name: "切り込みバサミ",
+    answers: ["切り込みバサミ", "きりこみばさみ"],
+    images: ["./questions/ffj/36-1.webp"],
+  },
+  {
+    id: 37,
+    name: "三角スケール",
+    answers: ["三角スケール", "さんかくすけーる"],
+    images: ["./questions/ffj/37-1.webp"],
+  },
+  {
+    id: 38,
+    name: "水平器",
+    answers: ["水平器", "すいへいき"],
+    images: ["./questions/ffj/38-1.webp"],
+  },
+  {
+    id: 39,
+    name: "木引きノコギリ",
+    answers: ["木引きノコギリ", "きびきのこぎり"],
+    images: ["./questions/ffj/39-1.webp"],
+  },
+  {
+    id: 40,
+    name: "木バサミ",
+    answers: ["木バサミ", "きばさみ"],
+    images: ["./questions/ffj/40-1.webp"],
+  },
+  {
+    id: 41,
+    name: "レンガこて",
+    answers: ["レンガこて"],
+    images: ["./questions/ffj/41-1.webp"],
+  },
+  {
+    id: 42,
+    name: "水糸",
+    answers: ["水糸", "みずいと"],
+    images: ["./questions/ffj/42-1.webp"],
+  },
+  {
+    id: 43,
+    name: "シェロ縄",
+    answers: ["シェロ縄", "しぇろなわ", "シュロ縄", "しゅろなわ"],
+    images: ["./questions/ffj/43-1.webp"],
+  },
+  {
+    id: 46,
+    name: "こうがい板",
+    answers: ["こうがい板", "こうがいいた"],
+    images: ["./questions/ffj/46-1.webp"],
+  },
+  {
+    id: 47,
+    name: "ノギス",
+    answers: ["ノギス"],
+    images: ["./questions/ffj/47-1.webp"],
+  },
+  {
+    id: 48,
+    name: "手ぼうき",
+    answers: ["手ぼうき", "てぼうき"],
+    images: ["./questions/ffj/48-1.webp"],
+  },
+  {
+    id: 49,
+    name: "ごろた石",
+    answers: ["ごろた石", "ごろたいし"],
+    images: ["./questions/ffj/49-1.webp"],
+  },
+] satisfies readonly FfjQuestion[];

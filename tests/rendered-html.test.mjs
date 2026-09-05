@@ -15,23 +15,32 @@ async function render() {
   );
 }
 
-test("漢字の読み練習画面をサーバー描画する", async () => {
+test("学習内容の選択画面をサーバー描画する", async () => {
   const response = await render();
   assert.equal(response.status, 200);
   const html = await response.text();
 
   assert.match(html, /<html[^>]*lang="ja"/i);
-  assert.match(html, /<title>漢字の読み練習 \| よみみち<\/title>/i);
-  assert.match(html, /この漢字、なんて読む？/);
-  assert.match(html, /読みをひらがなで入力/);
-  assert.match(html, /わからない/);
-  assert.match(
-    html,
-    /問題\s*(?:<!-- -->)?1(?:<!-- -->)?\s*\/\s*(?:<!-- -->)?10/,
-  );
-  assert.match(html, /autocomplete="off"/i);
-  assert.match(html, /spellcheck="false"/i);
+  assert.match(html, /<title>学習ドリル \| よみみち<\/title>/i);
+  assert.match(html, /今日は何を練習する？/);
+  assert.match(html, /漢字の読み/);
+  assert.match(html, /第二回漢字学習/);
+  assert.match(html, /全43問からランダムに10問/);
+  assert.match(html, /植物・道具の名前/);
+  assert.match(html, /全256問からランダムに10問/);
   assert.doesNotMatch(html, /codex-preview|react-loading-skeleton/i);
+});
+
+test("学習を選ぶと漢字練習を開始し、終了後に選択画面へ戻れる", async () => {
+  const page = await readFile(new URL("../app/page.tsx", import.meta.url), "utf8");
+
+  assert.match(page, /type Screen = "menu" \| "practice"/);
+  assert.match(page, /screen === "menu"/);
+  assert.match(page, /function startKanjiPractice\(\)/);
+  assert.match(page, /onClick={startKanjiPractice}/);
+  assert.match(page, /学習を選び直す/);
+  assert.match(page, /autoComplete="off"/);
+  assert.match(page, /spellCheck={false}/);
 });
 
 test("ドリル第25回〜第30回の掲載語を収録する", () => {
@@ -55,7 +64,7 @@ test("答えを確認して問題を飛ばせる", async () => {
   const source = await readFile(new URL("../app/page.tsx", import.meta.url), "utf8");
   assert.match(source, /feedback === "revealed"/);
   assert.match(source, /答え：/);
-  assert.match(source, /次の漢字へ/);
+  assert.match(source, /次の問題へ/);
 });
 
 test("正解表示とモバイル入力時の見やすさを強化する", async () => {
@@ -96,5 +105,33 @@ test("1回の練習は全256問からランダムに選んだ10問にする", as
   const page = await readFile(new URL("../app/page.tsx", import.meta.url), "utf8");
 
   assert.match(page, /SESSION_QUESTION_COUNT = 10/);
-  assert.match(page, /selectRandomQuestions\(questions, SESSION_QUESTION_COUNT\)/);
+  assert.match(page, /kanjiPracticeQuestions/);
+  assert.match(page, /selectRandomQuestions\(source, SESSION_QUESTION_COUNT\)/);
+});
+
+test("第二回漢字学習を第一回と分けて開始できる", async () => {
+  const page = await readFile(new URL("../app/page.tsx", import.meta.url), "utf8");
+
+  assert.match(page, /secondKanjiQuestions/);
+  assert.match(page, /function startSecondKanjiPractice\(\)/);
+  assert.match(page, /resetPractice\("kanji-second"\)/);
+  assert.match(page, /onClick={startSecondKanjiPractice}/);
+});
+
+test("画像問題も46問から10問を選び、次の画像だけ先読みする", async () => {
+  const [page, css] = await Promise.all([
+    readFile(new URL("../app/page.tsx", import.meta.url), "utf8"),
+    readFile(new URL("../app/globals.css", import.meta.url), "utf8"),
+  ]);
+
+  assert.match(page, /ffjQuestions/);
+  assert.match(page, /startImagePractice/);
+  assert.match(page, /この植物・道具の名前は？/);
+  assert.match(page, /new Image\(\)/);
+  assert.match(page, /loading="eager"/);
+  assert.match(page, /question.kind === "kanji" \? "正解！ 次の漢字へ" : "正解！ 次の問題へ"/);
+  assert.match(page, /question.kind === "kanji" \? "ぜんぶ読めました！" : "ぜんぶ答えられました！"/);
+  assert.match(css, /\.question-images\s*\{[^}]*height:\s*auto/s);
+  assert.match(css, /\.question-image-frame\s+img\s*\{[^}]*max-width:\s*100%[^}]*height:\s*auto/s);
+  assert.doesNotMatch(css, /\.input-compact\s+\.question-images\s*\{[^}]*height:/s);
 });
