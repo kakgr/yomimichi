@@ -27,6 +27,7 @@ test("学習内容の選択画面をサーバー描画する", async () => {
   assert.match(html, /第二回漢字学習/);
   assert.match(html, /全43問からランダムに10問/);
   assert.match(html, /植物・道具の名前/);
+  assert.match(html, /全61問からランダムに10問/);
   assert.match(html, /全256問からランダムに10問/);
   assert.doesNotMatch(html, /codex-preview|react-loading-skeleton/i);
 });
@@ -118,7 +119,7 @@ test("第二回漢字学習を第一回と分けて開始できる", async () =>
   assert.match(page, /onClick={startSecondKanjiPractice}/);
 });
 
-test("画像問題も46問から10問を選び、次の画像だけ先読みする", async () => {
+test("画像問題も61問から10問を選び、次の画像だけ先読みする", async () => {
   const [page, css] = await Promise.all([
     readFile(new URL("../app/page.tsx", import.meta.url), "utf8"),
     readFile(new URL("../app/globals.css", import.meta.url), "utf8"),

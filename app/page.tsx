@@ -200,7 +200,7 @@ export default function Home() {
               <span className="learning-copy">
                 <strong>植物・道具の名前</strong>
                 <span>画像を見て、植物や造園道具の名前を答えます。</span>
-                <small>全46問からランダムに10問</small>
+                <small>全61問からランダムに10問</small>
               </span>
               <span className="learning-arrow" aria-hidden="true">→</span>
             </button>
