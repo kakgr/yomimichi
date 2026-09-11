@@ -1,7 +1,7 @@
 import type { Question } from "./questions";
 
 /**
- * 漢字ドリル画像 IMG_3345.png・IMG_3346.png の掲載語です。
+ * 漢字ドリル画像 IMG_3345.png・IMG_3346.png・IMG_3358.HEIC・IMG_3359.HEIC の掲載語です。
  * 第一回の問題とは混ぜず、「第二回漢字学習」だけで使用します。
  */
 export const secondKanjiQuestions: readonly Question[] = [
@@ -48,4 +48,48 @@ export const secondKanjiQuestions: readonly Question[] = [
   { kanji: "殴る", readings: ["なぐる"] },
   { kanji: "回顧", readings: ["かいこ"] },
   { kanji: "顧問", readings: ["こもん"] },
+  { kanji: "放免", readings: ["ほうめん"] },
+  { kanji: "免許", readings: ["めんきょ"] },
+  { kanji: "克明", readings: ["こくめい"] },
+  { kanji: "克服", readings: ["こくふく"] },
+  { kanji: "霊長類", readings: ["れいちょうるい"] },
+  { kanji: "霊魂", readings: ["れいこん"] },
+  { kanji: "零細", readings: ["れいさい"] },
+  { kanji: "零下", readings: ["れいか"] },
+  { kanji: "空虚", readings: ["くうきょ"] },
+  { kanji: "虚無", readings: ["きょむ"] },
+  { kanji: "自虐", readings: ["じぎゃく"] },
+  { kanji: "虐待", readings: ["ぎゃくたい"] },
+  { kanji: "帳簿", readings: ["ちょうぼ"] },
+  { kanji: "簿記", readings: ["ぼき"] },
+  { kanji: "切符", readings: ["きっぷ"] },
+  { kanji: "符号", readings: ["ふごう"] },
+  { kanji: "危篤", readings: ["きとく"] },
+  { kanji: "篤実", readings: ["とくじつ"] },
+  { kanji: "戸籍", readings: ["こせき"] },
+  { kanji: "書籍", readings: ["しょせき"] },
+  { kanji: "窒息", readings: ["ちっそく"] },
+  { kanji: "窒素", readings: ["ちっそ"] },
+  { kanji: "独房", readings: ["どくぼう"] },
+  { kanji: "冷房", readings: ["れいぼう"] },
+  { kanji: "芳名", readings: ["ほうめい"] },
+  { kanji: "芳香", readings: ["ほうこう"] },
+  { kanji: "苗代", readings: ["なわしろ"] },
+  { kanji: "苗木", readings: ["なえぎ"] },
+  { kanji: "藩士", readings: ["はんし"] },
+  { kanji: "藩主", readings: ["はんしゅ"] },
+  { kanji: "埋葬", readings: ["まいそう"] },
+  { kanji: "葬儀", readings: ["そうぎ"] },
+  { kanji: "野菊", readings: ["のぎく"] },
+  { kanji: "白菊", readings: ["しらぎく"] },
+  { kanji: "栄華", readings: ["えいが"] },
+  { kanji: "華美", readings: ["かび"] },
+  { kanji: "審査", readings: ["しんさ"] },
+  { kanji: "審議", readings: ["しんぎ"] },
+  { kanji: "祝宴", readings: ["しゅくえん"] },
+  { kanji: "宴会", readings: ["えんかい"] },
+  { kanji: "冗長", readings: ["じょうちょう"] },
+  { kanji: "冗談", readings: ["じょうだん"] },
+  { kanji: "栄冠", readings: ["えいかん"] },
+  { kanji: "冠詞", readings: ["かんし"] },
 ];
