@@ -190,7 +190,7 @@ export default function Home() {
               <span className="learning-copy">
                 <strong>第二回漢字学習</strong>
                 <span>新しい漢字ドリルの掲載語を、第一回とは別に練習します。</span>
-                <small>全87問からランダムに10問</small>
+                <small>全44問からランダムに10問</small>
               </span>
               <span className="learning-arrow" aria-hidden="true">→</span>
             </button>

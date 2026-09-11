@@ -25,7 +25,7 @@ test("学習内容の選択画面をサーバー描画する", async () => {
   assert.match(html, /今日は何を練習する？/);
   assert.match(html, /漢字の読み/);
   assert.match(html, /第二回漢字学習/);
-  assert.match(html, /全87問からランダムに10問/);
+  assert.match(html, /全44問からランダムに10問/);
   assert.match(html, /植物・道具の名前/);
   assert.match(html, /全61問からランダムに10問/);
   assert.match(html, /全256問からランダムに10問/);
