@@ -29,6 +29,8 @@ test("学習内容の選択画面をサーバー描画する", async () => {
   assert.match(html, /植物・道具の名前/);
   assert.match(html, /全61問からランダムに10問/);
   assert.match(html, /全256問からランダムに10問/);
+  assert.match(html, /百人一首学習/);
+  assert.match(html, /第8〜18番・全11首/);
   assert.doesNotMatch(html, /codex-preview|react-loading-skeleton/i);
 });
 

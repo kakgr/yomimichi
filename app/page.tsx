@@ -6,9 +6,10 @@ import { questions } from "@/data/questions";
 import { secondKanjiQuestions } from "@/data/questionsSecond";
 import { isCorrectReading, selectRandomQuestions } from "@/lib/quiz.mjs";
 import { playCorrectSound, playInputSound } from "@/lib/sounds.mjs";
+import { HyakuninStudy } from "./HyakuninStudy";
 
 type Feedback = "idle" | "correct" | "incorrect" | "revealed";
-type Screen = "menu" | "practice";
+type Screen = "menu" | "practice" | "hyakunin";
 type PracticeKind = "kanji" | "kanji-second" | "image";
 type PracticeQuestion =
   | { kind: "kanji"; kanji: string; answers: readonly string[] }
@@ -204,8 +205,20 @@ export default function Home() {
               </span>
               <span className="learning-arrow" aria-hidden="true">→</span>
             </button>
+
+            <button className="learning-option" type="button" onClick={() => setScreen("hyakunin")}>
+              <span className="learning-mark hyakunin-learning-mark" aria-hidden="true">歌</span>
+              <span className="learning-copy">
+                <strong>百人一首学習</strong>
+                <span>和歌を覚えて、掛詞・枕詞・重要語句・作者を4択で練習します。</span>
+                <small>第8〜18番・全11首から10問</small>
+              </span>
+              <span className="learning-arrow" aria-hidden="true">→</span>
+            </button>
           </div>
         </section>
+      ) : screen === "hyakunin" ? (
+        <HyakuninStudy onBack={returnToMenu} />
       ) : (
         <section
           ref={studyCardRef}
