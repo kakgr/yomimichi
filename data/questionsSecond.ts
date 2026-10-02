@@ -1,7 +1,8 @@
 import type { Question } from "./questions";
 
 /**
- * 漢字ドリル画像 IMG_3358.HEIC・IMG_3359.HEIC の掲載語です。
+ * 漢字ドリル画像 IMG_3358.HEIC・IMG_3359.HEIC の44語と、
+ * IMG_3400.HEIC・IMG_3401.HEIC の二字熟語40語です。
  * 第一回の問題とは混ぜず、「第二回漢字学習」だけで使用します。
  */
 export const secondKanjiQuestions: readonly Question[] = [
@@ -49,4 +50,44 @@ export const secondKanjiQuestions: readonly Question[] = [
   { kanji: "冗談", readings: ["じょうだん"] },
   { kanji: "栄冠", readings: ["えいかん"] },
   { kanji: "冠詞", readings: ["かんし"] },
+  { kanji: "酵母", readings: ["こうぼ"] },
+  { kanji: "酵素", readings: ["こうそ"] },
+  { kanji: "陶酔", readings: ["とうすい"] },
+  { kanji: "心酔", readings: ["しんすい"] },
+  { kanji: "錯誤", readings: ["さくご"] },
+  { kanji: "交錯", readings: ["こうさく"] },
+  { kanji: "半鐘", readings: ["はんしょう"] },
+  { kanji: "警鐘", readings: ["けいしょう"] },
+  { kanji: "錠剤", readings: ["じょうざい"] },
+  { kanji: "施錠", readings: ["せじょう"] },
+  { kanji: "鍛錬", readings: ["たんれん"] },
+  { kanji: "鋳造", readings: ["ちゅうぞう"] },
+  { kanji: "鋳物", readings: ["いもの"] },
+  { kanji: "鎮静", readings: ["ちんせい"] },
+  { kanji: "重鎮", readings: ["じゅうちん"] },
+  { kanji: "精錬", readings: ["せいれん"] },
+  { kanji: "餓死", readings: ["がし"] },
+  { kanji: "餓鬼", readings: ["がき"] },
+  { kanji: "飽和", readings: ["ほうわ"] },
+  { kanji: "飽食", readings: ["ほうしょく"] },
+  { kanji: "詠嘆", readings: ["えいたん"] },
+  { kanji: "朗詠", readings: ["ろうえい"] },
+  { kanji: "該当", readings: ["がいとう"] },
+  { kanji: "該博", readings: ["がいはく"] },
+  { kanji: "諮問", readings: ["しもん"] },
+  { kanji: "譲渡", readings: ["じょうと"] },
+  { kanji: "譲歩", readings: ["じょうほ"] },
+  { kanji: "請求", readings: ["せいきゅう"] },
+  { kanji: "申請", readings: ["しんせい"] },
+  { kanji: "委託", readings: ["いたく"] },
+  { kanji: "承諾", readings: ["しょうだく"] },
+  { kanji: "諾否", readings: ["だくひ"] },
+  { kanji: "訂正", readings: ["ていせい"] },
+  { kanji: "改訂", readings: ["かいてい"] },
+  { kanji: "謀略", readings: ["ぼうりゃく"] },
+  { kanji: "無謀", readings: ["むぼう"] },
+  { kanji: "誘惑", readings: ["ゆうわく"] },
+  { kanji: "勧誘", readings: ["かんゆう"] },
+  { kanji: "盗賊", readings: ["とうぞく"] },
+  { kanji: "賊軍", readings: ["ぞくぐん"] },
 ];
