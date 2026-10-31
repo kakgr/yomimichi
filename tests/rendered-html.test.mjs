@@ -1,7 +1,6 @@
 import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
 import test from "node:test";
-import { questions } from "../data/questions.ts";
 
 async function render() {
   const workerUrl = new URL("../dist/server/index.js", import.meta.url);
@@ -24,11 +23,10 @@ test("学習内容の選択画面をサーバー描画する", async () => {
   assert.match(html, /<title>学習ドリル \| よみみち<\/title>/i);
   assert.match(html, /今日は何を練習する？/);
   assert.match(html, /漢字の読み/);
-  assert.match(html, /第二回漢字学習/);
-  assert.match(html, /全84問からランダムに10問/);
+  assert.doesNotMatch(html, /第二回漢字学習/);
   assert.match(html, /植物・道具の名前/);
   assert.match(html, /全61問からランダムに10問/);
-  assert.match(html, /全256問からランダムに10問/);
+  assert.match(html, /全44問からランダムに10問/);
   assert.match(html, /百人一首学習/);
   assert.match(html, /第8〜18番・全11首/);
   assert.doesNotMatch(html, /codex-preview|react-loading-skeleton/i);
@@ -44,16 +42,6 @@ test("学習を選ぶと漢字練習を開始し、終了後に選択画面へ�
   assert.match(page, /学習を選び直す/);
   assert.match(page, /autoComplete="off"/);
   assert.match(page, /spellCheck={false}/);
-});
-
-test("ドリル第25回〜第30回の掲載語を収録する", () => {
-  assert.equal(questions.length, 256);
-  const entries = new Map(questions.map(({ kanji, readings }) => [kanji, readings]));
-  assert.deepEqual(entries.get("佳作"), ["かさく"]);
-  assert.deepEqual(entries.get("泌尿器"), ["ひにょうき"]);
-  assert.deepEqual(entries.get("擦過傷"), ["さっかしょう"]);
-  assert.deepEqual(entries.get("湖畔"), ["こはん"]);
-  assert.deepEqual(entries.get("地軸"), ["ちじく"]);
 });
 
 test("問題データを専用ファイルで管理する", async () => {
@@ -104,7 +92,7 @@ test("入力時と正解時にそれぞれ音を鳴らす", async () => {
   assert.match(page, /advancingRef\.current = true;\s*playCorrectSound\(\)/);
 });
 
-test("1回の練習は全256問からランダムに選んだ10問にする", async () => {
+test("1回の練習は全44問からランダムに選んだ10問にする", async () => {
   const page = await readFile(new URL("../app/page.tsx", import.meta.url), "utf8");
 
   assert.match(page, /SESSION_QUESTION_COUNT = 10/);
@@ -112,13 +100,10 @@ test("1回の練習は全256問からランダムに選んだ10問にする", as
   assert.match(page, /selectRandomQuestions\(source, SESSION_QUESTION_COUNT\)/);
 });
 
-test("第二回漢字学習を第一回と分けて開始できる", async () => {
+test("漢字学習は一つのメニューと問題データだけを使用する", async () => {
   const page = await readFile(new URL("../app/page.tsx", import.meta.url), "utf8");
-
-  assert.match(page, /secondKanjiQuestions/);
-  assert.match(page, /function startSecondKanjiPractice\(\)/);
-  assert.match(page, /resetPractice\("kanji-second"\)/);
-  assert.match(page, /onClick={startSecondKanjiPractice}/);
+  assert.doesNotMatch(page, /secondKanjiQuestions|kanji-second|startSecondKanjiPractice/);
+  assert.match(page, /onClick={startKanjiPractice}/);
 });
 
 test("画像問題も61問から10問を選び、次の画像だけ先読みする", async () => {

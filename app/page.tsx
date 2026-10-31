@@ -3,26 +3,19 @@
 import { FormEvent, KeyboardEvent, useEffect, useRef, useState } from "react";
 import { ffjQuestions } from "@/data/ffjQuestions";
 import { questions } from "@/data/questions";
-import { secondKanjiQuestions } from "@/data/questionsSecond";
 import { isCorrectReading, selectRandomQuestions } from "@/lib/quiz.mjs";
 import { playCorrectSound, playInputSound } from "@/lib/sounds.mjs";
 import { HyakuninStudy } from "./HyakuninStudy";
 
 type Feedback = "idle" | "correct" | "incorrect" | "revealed";
 type Screen = "menu" | "practice" | "hyakunin";
-type PracticeKind = "kanji" | "kanji-second" | "image";
+type PracticeKind = "kanji" | "image";
 type PracticeQuestion =
   | { kind: "kanji"; kanji: string; answers: readonly string[] }
   | { kind: "image"; id: number; name: string; answers: readonly string[]; images: readonly string[] };
 const SESSION_QUESTION_COUNT = 10;
 
 const kanjiPracticeQuestions: PracticeQuestion[] = questions.map(({ kanji, readings }) => ({
-  kind: "kanji",
-  kanji,
-  answers: readings,
-}));
-
-const secondKanjiPracticeQuestions: PracticeQuestion[] = secondKanjiQuestions.map(({ kanji, readings }) => ({
   kind: "kanji",
   kanji,
   answers: readings,
@@ -117,11 +110,7 @@ export default function Home() {
   }
 
   function resetPractice(kind = practiceKind) {
-    const source = kind === "kanji"
-      ? kanjiPracticeQuestions
-      : kind === "kanji-second"
-        ? secondKanjiPracticeQuestions
-        : imagePracticeQuestions;
+    const source = kind === "kanji" ? kanjiPracticeQuestions : imagePracticeQuestions;
     setPracticeKind(kind);
     setQuestionOrder(selectRandomQuestions(source, SESSION_QUESTION_COUNT));
     setQuestionIndex(0);
@@ -140,11 +129,6 @@ export default function Home() {
 
   function startImagePractice() {
     resetPractice("image");
-    setScreen("practice");
-  }
-
-  function startSecondKanjiPractice() {
-    resetPractice("kanji-second");
     setScreen("practice");
   }
 
@@ -181,17 +165,7 @@ export default function Home() {
               <span className="learning-copy">
                 <strong>漢字の読み</strong>
                 <span>表示された熟語の読みを、ひらがなで答えます。</span>
-                <small>全256問からランダムに10問</small>
-              </span>
-              <span className="learning-arrow" aria-hidden="true">→</span>
-            </button>
-
-            <button className="learning-option" type="button" onClick={startSecondKanjiPractice}>
-              <span className="learning-mark second-learning-mark" aria-hidden="true">弐</span>
-              <span className="learning-copy">
-                <strong>第二回漢字学習</strong>
-                <span>新しい漢字ドリルの掲載語を、第一回とは別に練習します。</span>
-                <small>全84問からランダムに10問</small>
+                <small>全44問からランダムに10問</small>
               </span>
               <span className="learning-arrow" aria-hidden="true">→</span>
             </button>

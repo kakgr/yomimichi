@@ -4,7 +4,7 @@
 
 ## 漢字を変更する
 
-出題内容は [`data/questions.ts`](data/questions.ts) だけで管理しています。
+漢字の出題内容は [`data/questions.ts`](data/questions.ts) だけで管理しています。現在は、画像 IMG_3441・IMG_3442 の22組・44語（「又貸し」「又の日」を含む）から毎回10問を出します。
 
 ```ts
 { kanji: "明日", readings: ["あした", "あす"] },
